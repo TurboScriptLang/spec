@@ -11,6 +11,18 @@ This Specification available under the Open Web Foundation Final Specification A
 * [1 Introduction](#1)
 * [2 Basic Concepts](#2)
 * [3 Module](#3)
+    * [3.1 Import Declarations](#3.1)
+    * [3.2 Declarations and Dynamic Linking](#3.2)
+* [4 Types](#4)
+    * [4.1 Numeric Types](#4.1)
+* [5 Literals](#5)
+    * [5.1 Numeric Literals](#5.1)
+* [6 Interface](#6)
+* [7 Struct](#7)
+* [8 Receving functions](#8)
+* [9 Class](#9)
+* [11 SIMD (128bit)](#11)
+* [13 Worker](#13)
 
 
 # <a name="1"/>1 Introduction
@@ -74,22 +86,32 @@ is exactly equivalent to the import declaration
 from "./components/awesome-component" import {default as awesome}
 ```
 
-# <a name="1.2"/>1.2 Declarations
-
+# <a name="3.2"/>3.2 Declarations and Dynamic Linking
+Declarations defines symbols in the AST without implementations details. 
+These symbols must be dynamically linked at runtime.
 ```typescript
 declare module console {
     function log(value:int32):void
 }
+
+declare function test(){
+}
+
+declare class CommonObject {
+    constructor(){}
+}
+
+start function main() {
+    let obj = new CommonObject();
+}
 ```
+
 Above declaration will import `{ console: { log: value => {} } }` to WebAssembly
 implementation of the import is up to the user.
 
-```typescript
-declare var PI:float64 = 3.141592653589793;
-var twoPI:float64 = 2.0 * PI;
-```
+# <a name="4">4 Types
 
-# <a name="1.x">1.x Numeric types
+# <a name="4.1">4.1 Numeric types
 
 Type      | Alias | Description
 ----------|-------------|-------------
@@ -104,7 +126,19 @@ Type      | Alias | Description
 `float32`   | float         | IEEE-754 32-bit floating-point numbers
 `float64`  | double         | IEEE-754 64-bit floating-point numbers
 
-# <a name="1.x">1.x Numeric literals
+# <a name="4.2">4.2 Array type
+An array is a numbered sequence of elements of a single type, called the element type. The number of elements is called the length and is never negative.
+The length is part of the array's type; it must evaluate to a non­negative constant representable by a value of type `int64`. The length of array `a` can be discovered using the instance getter `a.length`. The elements can be addressed by integer indices 0 through `a.length -1`. Array types are always one­ dimensional but may be composed to form multi­dimensional types.
+
+# <a name="4.3">4.3 Pointer type
+A pointer type denotes the set of all pointers to variables of a given type, called the base type of the pointer. The value of an uninitialized pointer is `null`.
+
+# <a name="4.4">4.3 String type
+A string type represents the set of string values. A string value is a (possibly empty) sequence of bytes. The predeclared string type is string. The length of a string `s` can be discovered using the built­in instance getter `s.length`. The length is a compile­time constant if the string is a constant. A string's elements can be accessed by integer indices 0 through s.length - 1. It is illegal to take the address of such an element; if s[i] is the i'th byte of a string, &s[i] is invalid.
+
+# <a name="5">5 Literals
+
+# <a name="5.1">5.1 Numeric literals
 
 ```typescript
 // Integers literals
@@ -118,7 +152,7 @@ let _float64 = 1.0 //default floating point number type is float64
 let _float32 = 1.0f //number.fraction+f represent 32bit floating point numbers
 ```
 
-# <a name="1.x"/>1.x Interface
+# <a name="6"/>6 Interface
 
 An interface specifies properties and method set of an unknown implementation. implementations can be completely isolated, invoking unimplemented methods or properties raise compiler time error.
 
@@ -137,7 +171,7 @@ interface Robot {
     die()
 }
 ```
-# <a name="1.x"/>1.x Struct
+# <a name="7"/>7 Struct
 ```typescript
 struct GenericRobot {
     readonly name = "GENERIC_ROBOT"
@@ -155,11 +189,11 @@ struct Dog {
     name = "DOG"
 }
 ```
-# <a name="1.x"/>1.x Receving functions
+# <a name="8"/>8 Receving functions
 ```typescript
 function [this:Dog] bark() {/*implementation*/}
 ```
-# <a name="1.x"/>1.x Class
+# <a name="9"/>9 Class
 
 ##### Example 1
 ```typescript
@@ -265,7 +299,7 @@ function main() {
 }
 ```
 
-# <a name="1.x"/>1.x Generic Types and Functions
+# <a name="10"/>10 Generic Types and Functions
 
 ```typescript
 class Foo<T> {
@@ -300,7 +334,7 @@ export function testF64(value:float64):float64 {
 }
 ```
 
-# <a name="1.x"/>1.x SIMD (128bit)
+# <a name="11"/>11 SIMD (128bit)
 ```typescript
 let int8_x16:simd128<int8>;
 let int16_x8:simd128<int16>;
@@ -334,7 +368,7 @@ let rgba = new RGBA32_x4();
 console.log(rgba)   // {r:[0.0, 0.0, 0.0, 0.0], g:[0.0, 0.0, 0.0, 0.0], b:[0.0, 0.0, 0.0, 0.0], a:[0.0, 0.0, 0.0, 0.0]}
 ```
 
-# <a name="1.x"/>1.x Channel
+# <a name="12"/>12 Channel
 ```typescript
 class RGBA {
     constructor(
@@ -353,7 +387,7 @@ rgba <- color
 console.log(rgba)
 ```
 
-# <a name="1.x"/>1.x Worker
+# <a name="13"/>13 Worker
 
 ```typescript
 worker {
