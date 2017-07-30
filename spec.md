@@ -37,10 +37,169 @@ There are some difference between concept of JavaScript and TurboScript. 1) vari
 
 TurboScript stands for hassel free parallel programming in web using JavaScript dialect with additional type information on top of JavaScript syntax and parallel programming features like shared memory, context sharing workers, SIMD, channels etc... TurboScript may look like TypeScript but it is not TypeScript.
 
+# <a name="Lexical-elements"> Lexical elements
+
+# <a name="Comments"> Comments
+# <a name="Tokens"> Tokens
+# <a name="Semicolons"> Semicolons
+# <a name="Identifiers"> Identifiers
+
+# <a name="Keywords"> Keywords
+The following keywords are reserved and may not be used as identifiers.
+
+```TypeScript
+break             case              catch             class  
+const             continue          debugger          default  
+delete            do                else              enum  
+export            extends           false             finally  
+for               function          if                import  
+in                instanceof        new               null  
+return            super             switch            this  
+throw             true              try               typeof  
+var               void              while             with
+struct            channel           select
+```
+# <a name="Operators and Delimiters"> Operators and Delimiters
+
+# <a name="Integer literals"> Integer literals
+
+# <a name="Floating­point literals"> Floating­point literals
+
+# <a name="Rune literals"> Rune literals
+
+# <a name="String literals"> String literals
+
+# <a name="Constants"> Constants
+
+# <a name="Variables"> Variables
+
+# <a name="Types"> Types
+
+# <a name="Method sets"> Method sets
+
+# <a name="Boolean types"> Boolean types
+
+# <a name="String types"> String types
+
+# <a name="Array types"> Array types
+
+# <a name="Struct types"> Struct types
+
+# <a name="Class types"> Class types
+
+# <a name="Pointer types"> Pointer types
+
+# <a name="Function types"> Function types
+
+# <a name="Interface types"> Interface types
+
+# <a name="Channel types"> Channel types
+
+# <a name="Blocks"> Blocks
+
+# <a name="Declarations and scope"> Declarations and scope
+
+# <a name="Label scopes"> Label scopes
+
+# <a name="Predeclared identifiers"> Predeclared identifiers
+
+# <a name="Exported identifiers"> Exported identifiers
+
+# <a name="Uniqueness of identifiers"> Uniqueness of identifiers
+
+# <a name="Constant declarations"> Constant declarations
+
+# <a name="Type declarations"> Type declarations
+
+# <a name="Variable declarations"> Variable declarations
+
+# <a name="Function declarations"> Function declarations
+
+# <a name="Method declarations"> Method declarations
+
+# <a name="Class declarations"> Class declarations
+
+# <a name="Expressions"> Expressions
+
+# <a name="Operands"> Operands
+
+# <a name="Qualified identifiers"> Qualified identifiers
+
+# <a name="Function literals"> Function literals
+
+# <a name="Primary expressions"> Primary expressions
+
+# <a name="Selectors"> Selectors
+
+# <a name="Method expressions"> Method expressions
+
+# <a name="Method values"> Method values
+
+# <a name="Index expressions"> Index expressions
+
+# <a name="Calls"> Calls
+
+# <a name="Operators"> Operators
+
+# <a name="Arithmetic operators"> Arithmetic operators
+
+# <a name="Comparison operators"> Comparison operators
+
+# <a name="Logical operators"> Logical operators
+
+# <a name="Address operators"> Address operators
+
+# <a name="Receive operator"> Receive operator
+
+# <a name="Conversions"> Conversions
+
+# <a name="Constant expressions"> Constant expressions
+
+# <a name="Order of evaluation"> Order of evaluation
+
+# <a name="Statements"> Statements
+
+# <a name="Terminating statements"> Terminating statements
+
+# <a name="Empty statements"> Empty statements
+
+# <a name="Labeled statements"> Labeled statements
+
+# <a name="Expression statements"> Expression statements
+
+# <a name="Send statements"> Send statements
+
+# <a name="Send statements"> Send statements
+
+# <a name="IncDec statements"> IncDec statements
+
+# <a name="Assignments"> Assignments
+
+# <a name="If statements"> If statements
+
+# <a name="Switch statements"> Switch statements
+
+# <a name="For statements"> For statements
+
+# <a name="Worker statements"> Worker statements
+
+# <a name="Select statements"> Select statements
+
+# <a name="Return statements"> Return statements
+
+# <a name="Break statements"> Break statements
+
+# <a name="Continue statements"> Continue statements
+
+# <a name="Goto statements"> Goto statements
+
+# <a name="Built­in functions"> Built­in functions
+
+
 # <a name="3"/>3 Module
 Modules are fundamental components of TurboScript. Each TurboScript file is a module and modules can be combined to single wasm module. Worker modules always compiled to separate .wasm modules.
 
-```typescript
+```turboscript
 // main.tbs
 from "sevenzip" import {SevenZipReader} 
 var sevenZipReader:SevenZipReader;
@@ -176,7 +335,7 @@ interface Robot {
 struct GenericRobot {
     readonly name = "GENERIC_ROBOT"
     readonly id = 1
-    required serialNumber:uint32
+    serialNumber:uint32
 }
 ```
 Semicolumns are accepted
