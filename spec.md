@@ -653,11 +653,16 @@ async function applyFilter(in:RGBA[]): RGBA[] {
     let length = in.length;
     let numCpu = process.NUM_CPU;
     let blockSize = length / process.NUM_CPU;
-    let out = new RGBA[](length);
+    let ch = new RGBA[](length);
+    channel color:RGBA4 = new channel<i32>(numCpu)
     for(let i = 0; i < numCpu; i++) {
         let start = i * blockSize;
         worker filterKernel(in, out, start, start + blockSize);
     }
+    for (i = 0; i < numCpu; i++) {
+		<-ch
+		console.log('Show some progress...')
+	}
     return out;
 }
 
