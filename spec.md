@@ -643,11 +643,9 @@ function main() {
 # <a name="13"/>13 Worker
 
 ```typescript
-worker {
-    export function filterKernel(in:float64[], out:float64[], start:int32, end:int32) {
-        for(let i:int32 = start; i < end; i++){
-            out[i] = in[i];
-        }
+worker function filterKernel(in:float64[], out:float64[], start:int32, end:int32) {
+    for(let i:int32 = start; i < end; i++){
+        out[i] = in[i];
     }
 }
 
