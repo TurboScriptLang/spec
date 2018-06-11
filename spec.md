@@ -2,7 +2,7 @@
 
 Version 1.0
 
-July, 2017
+June, 2018
 
 This Specification available under the Open Web Foundation Final Specification Agreement Version 1.0 ("OWF 1.0") as of October 1, 2012. The OWF 1.0 is available at http://www.openwebfoundation.org/legal/the-owf-1-0-agreements/owfa-1-0.
 
@@ -43,7 +43,7 @@ This Specification available under the Open Web Foundation Final Specification A
     * [Declarations and Dynamic Linking](#Dynamic-Linking)
 
 
-# <a name="Introduction"/> Introduction
+# <a name="Introduction"> Introduction
 
 TurboScript designed to fill missing features of JavaScript which offered by WebAssembly. TurboScript's primary goals is to leverage features of WebAssembly while progamming in JavaScript like language. This specification provide a complete picture of what TurboScript is and not. There is no intention to replace JavaScript or TypeScript with TurboScript. Initial version of language will concentrate on parallel programming and SIMD features targeting post-MVP WebAssembly. Since language mainly targeting parallel programming features, integration with WebGL Next and WebGPU are in radar. 
 
@@ -51,7 +51,7 @@ TurboScript intented to work closely with JavaScript therefore JavaScript is an 
 
 There are some difference between concept of JavaScript and TurboScript. 1) variables and members cannot be undefined therefore no `undefined` type. default value will be `null`. 2) TurboScript doesnot support closure functions. 3) TurboScript's runtime memory is managed by programmer, ie. there is no garbage collector in TurboScript. 
 
-# <a name="Basic-concepts"/> Basic concepts
+# <a name="Basic-concepts"> Basic concepts
 
 TurboScript stands for hassel free parallel programming in web using JavaScript dialect with additional type information on top of JavaScript syntax and parallel programming features like shared memory, context sharing workers, SIMD, channels etc... TurboScript may look like TypeScript but it is not TypeScript.
 
@@ -176,18 +176,18 @@ A boolean type represents the set of Boolean truth values denoted by the predecl
 
 ## <a name="Numeric-types"> Numeric types
 
-Type      | Alias | Description
-----------|-------------|-------------
-`int8`   | `i8`, `sbyte`         | signed  8-bit integers (-128 to 127)
-`uint8`    | `u8`, `byte`         | unsigned  8-bit integers (0 to 255)
-`int16`   | `i16`, `short`         | signed 16-bit integers (-32768 to 32767)
-`uint16`  | `u16`, `ushort`         | unsigned 16-bit integers (0 to 65535)
-`int32`     | `i32`, `int`         | signed 32-bit integers (-2147483648 to 2147483647)
-`uint32`    | `u32`, `uint`         | unsigned 32-bit integers (0 to 4294967295)
-`int64`    | `i64`, `long`         | signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
-`uint64`   | `u64`, `ulong`         | unsigned 64-bit integers (0 to 18446744073709551615)
-`float32`   | `f32`, `float`         | IEEE-754 32-bit floating-point numbers
-`float64`  | `f64`, `double`         | IEEE-754 64-bit floating-point numbers
+Type      | Alias                | Description
+----------|----------------------|-------------
+`int8`    | `i8`, `sbyte`        | signed  8-bit integers (-128 to 127)
+`uint8`   | `u8`, `byte`         | unsigned  8-bit integers (0 to 255)
+`int16`   | `i16`, `short`       | signed 16-bit integers (-32768 to 32767)
+`uint16`  | `u16`, `ushort`      | unsigned 16-bit integers (0 to 65535)
+`int32`   | `i32`, `int`         | signed 32-bit integers (-2147483648 to 2147483647)
+`uint32`  | `u32`, `uint`        | unsigned 32-bit integers (0 to 4294967295)
+`int64`   | `i64`, `long`        | signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
+`uint64`  | `u64`, `ulong`       | unsigned 64-bit integers (0 to 18446744073709551615)
+`float32` | `f32`, `float`       | IEEE-754 32-bit floating-point numbers
+`float64` | `f64`, `double`      | IEEE-754 64-bit floating-point numbers
 
 ## <a name="String-type"> String type
 A string type represents the set of string values. A string value is a (possibly empty) sequence of bytes. The predeclared string type is string. The length of a string `s` can be discovered using the built­in instance getter `s.length`. The length is a compile­time constant if the string is a constant. A string's elements can be accessed by integer indices 0 through s.length - 1. It is illegal to take the address of such an element; if s[i] is the i'th byte of a string, &s[i] is invalid.
@@ -290,7 +290,7 @@ rgba <- color
 console.log(rgba)
 ```
 
-## <a name="Generic-types"/> Generic types
+## <a name="Generic-types"> Generic types
 
 ```typescript
 class Foo<T> {
@@ -373,14 +373,14 @@ In addition to explicit blocks in the source code, there are implicit blocks:
 2. Each clause in a "switch" or "select" statement acts as an implicit block.
 
 # <a name="Declarations-and-scope"> Declarations and scope
-
+---
 A declaration binds identifier to a constant, type, variable, function, label, or package. Every identifier in a program must be declared. No identifier may be declared twice in the same block.
 
-# <a name="Label-scopes"> Label scopes
+## <a name="Label-scopes"> Label scopes
 
 Labels are declared by labeled statements and are used in the "break", "continue", and "goto" statements. It is illegal to define a label that is never used. In contrast to other identifiers, labels are not block scoped and do not conflict with identifiers that are not labels. The scope of a label is the body of the function in which it is declared and excludes the body of any nested function.
 
-# <a name="Predeclared-identifiers"> Predeclared identifiers
+## <a name="Predeclared-identifiers"> Predeclared identifiers
 
 The following identifiers are implicitly declared in the global block:
 
@@ -397,11 +397,11 @@ Functions:
         alignof instanceof new sizeof typeof  
 ```
 
-# <a name="Uniqueness-of-identifiers"> Uniqueness of identifiers
+## <a name="Uniqueness-of-identifiers"> Uniqueness of identifiers
 
 Given a set of identifiers, an identifier is called unique if it is different from every other in the set. Two identifiers are different if they are spelled differently, or if they appear in different modules. Otherwise, they are the same.
 
-# <a name="Constant-declarations"> Constant declarations
+## <a name="Constant-declarations"> Constant declarations
 
 A constant declaration binds identifiers (the names of the constants) to the values of constant expressions.
 
@@ -411,15 +411,15 @@ const tinyInt = 1
 const longFloat:float32 = 64912.8273, logInt:int64 = 8915238172653
 ```
 
-# <a name="Type-declarations"> Type declarations
+## <a name="Type-declarations"> Type declarations
 
 A type declaration binds an identifier, the type name, to a new type that has the same underlying type as an existing type, and operations defined for the existing type are also defined for the new type. The new type is different from the existing type.
 
-# <a name="Variable-declarations"> Variable declarations
+## <a name="Variable-declarations"> Variable declarations
 
 A variable declaration creates one or more variables, binds corresponding identifiers to them, and gives each a type and an initial value.
 
-# <a name="Function-declarations"> Function declarations
+## <a name="Function-declarations"> Function declarations
 
 A function declaration binds an identifier, the function name, to a function.
 ```
@@ -429,97 +429,150 @@ Function     = Signature FunctionBody
 FunctionBody = Block
 ```
 
-# <a name="Method-declarations"> Method declarations
+## <a name="Method-declarations"> Method declarations
 
 A method is a function with a receiver. A method declaration binds an identifier, the method name, to a method, and associates the method with the receiver's base type.
 ```
 MethodDecl   = "function" Receiver MethodName ( Function | Signature )
 Receiver     = Parameters
 ```
-# <a name="Class-declarations"> Class declarations
+## <a name="Class-declarations"> Class declarations
 
 A class is combinations of struct and methods.
 
 # <a name="Expressions"> Expressions
-
+---
 An expression specifies the computation of a value by applying operators and functions to operands.
 
-# <a name="Operands"> Operands
+## <a name="Operands"> Operands
+Operands denote the elementary values in an expression. An operand may be a literal, a (possibly [qualified](#Qualified-identifiers)) non-blank identifier denoting a [constant](#Constant-declarations), [variable](#Variable-declarations), or [function](#Function-declarations), or a parenthesized expression.
 
-# <a name="Qualified-identifiers"> Qualified identifiers
+The blank identifier may appear as an operand only on the left-hand side of an assignment.
 
-# <a name="Function-literals"> Function literals
+```
+Operand     = Literal | OperandName | "(" Expression ")" .
+Literal     = BasicLit | CompositeLit | FunctionLit .
+BasicLit    = int_lit | float_lit | imaginary_lit | rune_lit | string_lit .
+OperandName = identifier | QualifiedIdent.
+```
 
-# <a name="Primary-expressions"> Primary expressions
+## <a name="Qualified-identifiers"> Qualified identifiers
+A qualified identifier is an identifier qualified with a package name prefix. Both the package name and the identifier must not be blank.
 
-# <a name="Selectors"> Selectors
+```
+QualifiedIdent = PackageName "." identifier .
+```
+A qualified identifier accesses an identifier in a different package, which must be imported. The identifier must be exported and declared in the package block of that package.
+```
+Math.sin	// denotes the sin function in package Math
+```
+## <a name="Function-literals"> Function literals
+A function literal represents an anonymous [function](#Function-declarations).
+```
+FunctionLit = "function" Signature FunctionBody .
+```
+```
+function(a, b:int, z:float64):boolean { return a*b < int(z) }
+```
+## <a name="Primary-expressions"> Primary expressions
+Primary expressions are the operands for unary and binary expressions.
+```
+PrimaryExpr =
+	Operand |
+	Conversion |
+	MethodExpr |
+	PrimaryExpr Selector |
+	PrimaryExpr Index |
+	PrimaryExpr Slice |
+	PrimaryExpr TypeAssertion |
+	PrimaryExpr Arguments .
 
-# <a name="Method-expressions"> Method expressions
+Selector       = "." identifier .
+Index          = "[" Expression "]" .
+TypeAssertion  = "." "(" Type ")" .
+Arguments      = "(" [ ( ExpressionList | Type [ "," ExpressionList ] ) [ "..." ] [ "," ] ] ")" .
+```
+```
+x
+2
+(s + ".txt")
+f(3.1415, true)
+Point{1, 2}
+m["foo"]
+obj.color
+f.p[i].x()
+```
+## <a name="Selectors"> Selectors
+For a [primary expression](#Primary-expressions) x that is not a [module name](#Module), the selector expression
+```
+x.f
+```
+## <a name="Method-expressions"> Method expressions
 
-# <a name="Method-values"> Method values
+## <a name="Method-values"> Method values
 
-# <a name="Index-expressions"> Index expressions
+## <a name="Index-expressions"> Index expressions
 
-# <a name="Calls"> Calls
+## <a name="Calls"> Calls
 
-# <a name="Operators"> Operators
+## <a name="Operators"> Operators
 
-# <a name="Arithmetic-operators"> Arithmetic operators
+## <a name="Arithmetic-operators"> Arithmetic operators
 
-# <a name="Comparison-operators"> Comparison operators
+## <a name="Comparison-operators"> Comparison operators
 
-# <a name="Logical-operators"> Logical operators
+## <a name="Logical-operators"> Logical operators
 
-# <a name="Address-operators"> Address operators
+## <a name="Address-operators"> Address operators
 
-# <a name="Receive-operator"> Receive operator
+## <a name="Receive-operator"> Receive operator
 
-# <a name="Conversions"> Conversions
+## <a name="Conversions"> Conversions
 
-# <a name="Constant-expressions"> Constant expressions
+## <a name="Constant-expressions"> Constant expressions
 
-# <a name="Order-of-evaluation"> Order of evaluation
+## <a name="Order-of-evaluation"> Order of evaluation
 
 # <a name="Statements"> Statements
+---
+## <a name="Terminating-statements"> Terminating statements
 
-# <a name="Terminating-statements"> Terminating statements
+## <a name="Empty-statements"> Empty statements
 
-# <a name="Empty-statements"> Empty statements
+## <a name="Labeled-statements"> Labeled statements
 
-# <a name="Labeled-statements"> Labeled statements
+## <a name="Expression-statements"> Expression statements
 
-# <a name="Expression-statements"> Expression statements
+## <a name="Send-statements"> Send statements
 
-# <a name="Send-statements"> Send statements
+## <a name="Send-statements"> Send statements
 
-# <a name="Send-statements"> Send statements
+## <a name="IncDec-statements"> IncDec statements
 
-# <a name="IncDec-statements"> IncDec statements
+## <a name="Assignments"> Assignments
 
-# <a name="Assignments"> Assignments
+## <a name="If-statements"> If statements
 
-# <a name="If-statements"> If statements
+## <a name="Switch-statements"> Switch statements
 
-# <a name="Switch-statements"> Switch statements
+## <a name="For-statements"> For statements
 
-# <a name="For-statements"> For statements
+## <a name="Worker-statements"> Worker statements
 
-# <a name="Worker-statements"> Worker statements
+## <a name="Select-statements"> Select statements
 
-# <a name="Select-statements"> Select statements
+## <a name="Return-statements"> Return statements
 
-# <a name="Return-statements"> Return statements
+## <a name="Break-statements"> Break statements
 
-# <a name="Break-statements"> Break statements
+## <a name="Continue-statements"> Continue statements
 
-# <a name="Continue-statements"> Continue statements
-
-# <a name="Goto-statements"> Goto statements
+## <a name="Goto-statements"> Goto statements
 
 # <a name="Built­in-functions"> Built­in functions
 
 
-# <a name="Module"/> Module
+# <a name="Module"> Module
 Modules are fundamental components of TurboScript. Each TurboScript file is a module and modules can be combined to single wasm module. Worker modules always compiled to separate .wasm modules.
 
 ```typescript
