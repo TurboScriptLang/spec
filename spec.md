@@ -161,16 +161,16 @@ A boolean type represents the set of Boolean truth values denoted by the predecl
 
 Type      | Alias | Description
 ----------|-------------|-------------
-`int8`   | sbyte         | signed  8-bit integers (-128 to 127)
-`uint8`    | byte         | unsigned  8-bit integers (0 to 255)
-`int16`   | short         | signed 16-bit integers (-32768 to 32767)
-`uint16`  | ushort         | unsigned 16-bit integers (0 to 65535)
-`int32`     | int         | signed 32-bit integers (-2147483648 to 2147483647)
-`uint32`    | uint         | unsigned 32-bit integers (0 to 4294967295)
-`int64`    | long         | signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
-`uint64`   | ulong         | unsigned 64-bit integers (0 to 18446744073709551615)
-`float32`   | float         | IEEE-754 32-bit floating-point numbers
-`float64`  | double         | IEEE-754 64-bit floating-point numbers
+`i8`   | `int8`, `sbyte`         | signed  8-bit integers (-128 to 127)
+`u8`    | `uint8`, `byte`         | unsigned  8-bit integers (0 to 255)
+`i16`   | `int16`, `short`         | signed 16-bit integers (-32768 to 32767)
+`u16`  | `uint16`, `ushort`         | unsigned 16-bit integers (0 to 65535)
+`i32`     | `int32`, `int`         | signed 32-bit integers (-2147483648 to 2147483647)
+`u32`    | `uint32`, `uint`         | unsigned 32-bit integers (0 to 4294967295)
+`i64`    | `int64`, `long`         | signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
+`u64`   | `uint64`, `ulong`         | unsigned 64-bit integers (0 to 18446744073709551615)
+`f32`   | `float32`, `float`         | IEEE-754 32-bit floating-point numbers
+`f64`  | `float64`, `double`         | IEEE-754 64-bit floating-point numbers
 
 ## <a name="String-type"> String type
 A string type represents the set of string values. A string value is a (possibly empty) sequence of bytes. The predeclared string type is string. The length of a string `s` can be discovered using the built­in instance getter `s.length`. The length is a compile­time constant if the string is a constant. A string's elements can be accessed by integer indices 0 through s.length - 1. It is illegal to take the address of such an element; if s[i] is the i'th byte of a string, &s[i] is invalid.
