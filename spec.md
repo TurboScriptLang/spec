@@ -20,8 +20,9 @@ This Specification available under the Open Web Foundation Final Specification A
     * [Integer literals](#Integer-literals)
     * [Floating­point literals](#Floating­point-literals)
     * [String literals](#String-literals)
-    * [Constants](#Constants)
-    * [Variables](#Variables)
+* [Constants](#Constants)
+* [Variables](#Variables)
+* [Block scope variables](#Block-scope-variables)
 * [Types](#Types)
     * [Boolean type](#Boolean-type)
     * [Numeric types](#Numeric-types)
@@ -87,16 +88,16 @@ Identifiers name program entities such as variables and types. An identifier is 
 The following keywords are reserved and may not be used as identifiers.
 
 ```typescript
-break             case              catch             class  
-const             continue          debugger          default  
-delete            do                else              enum  
-export            extends           false             finally  
-for               function          if                import  
-in                instanceof        new               null  
-return            super             switch            this  
-throw             true              try               typeof  
-var               void              while             with
-struct            channel           select
+break           case                catch               class  
+const           continue            debugger            default
+channel         delete              do                  else
+enum            export              extends             false
+finally         for                 function            if
+import          in                  instanceof          new
+null            return              super               switch
+sizeof          select              struct              select
+this            throw               true                try
+typeof          var                 void                while
 ```
 ## <a name="Operators-and-Delimiters"> Operators and Delimiters
 
@@ -141,13 +142,29 @@ exponent  = ( "e" | "E" ) [ "+" | "-" ] decimals .
 
 ## <a name="String-literals"> String literals
 
-extends JavaScript string literal
+A string literal represents a string variable obtained from concatenating a sequence of characters. There are two forms: primitive string literals and template literals.
+
+Template literals are string literals allowing embedded expressions. multi-line strings and string interpolation features are possible with them
 
 ## <a name="Constants"> Constants
 
-extends JavaScript constant
+Constants are block-scoped, much like variables defined using the let statement. The value of a constant cannot change through re-assignment, and it can't be redeclared.
 
 ## <a name="Variables"> Variables
+
+The `var` statement declares a variable, optionally initializing it to a value.
+
+```typescript
+var varname1 [= value1] [, varname2 [= value2] ... [, varnameN [= valueN]]];
+```
+
+## <a name="Block-scope-variables"> Block scope variables
+
+The `let` statement declares a block scope local variable, optionally initializing it to a value.
+
+```typescript
+let var1 [= value1] [, var2 [= value2]] [, ..., varN [= valueN]];
+```
 
 # <a name="Types"> Types
 
@@ -161,16 +178,16 @@ A boolean type represents the set of Boolean truth values denoted by the predecl
 
 Type      | Alias | Description
 ----------|-------------|-------------
-`int8`   | sbyte         | signed  8-bit integers (-128 to 127)
-`uint8`    | byte         | unsigned  8-bit integers (0 to 255)
-`int16`   | short         | signed 16-bit integers (-32768 to 32767)
-`uint16`  | ushort         | unsigned 16-bit integers (0 to 65535)
-`int32`     | int         | signed 32-bit integers (-2147483648 to 2147483647)
-`uint32`    | uint         | unsigned 32-bit integers (0 to 4294967295)
-`int64`    | long         | signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
-`uint64`   | ulong         | unsigned 64-bit integers (0 to 18446744073709551615)
-`float32`   | float         | IEEE-754 32-bit floating-point numbers
-`float64`  | double         | IEEE-754 64-bit floating-point numbers
+`i8`   | `int8`, `sbyte`         | signed  8-bit integers (-128 to 127)
+`u8`    | `uint8`, `byte`         | unsigned  8-bit integers (0 to 255)
+`i16`   | `int16`, `short`         | signed 16-bit integers (-32768 to 32767)
+`u16`  | `uint16`, `ushort`         | unsigned 16-bit integers (0 to 65535)
+`i32`     | `int32`, `int`         | signed 32-bit integers (-2147483648 to 2147483647)
+`u32`    | `uint32`, `uint`         | unsigned 32-bit integers (0 to 4294967295)
+`i64`    | `int64`, `long`         | signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
+`u64`   | `uint64`, `ulong`         | unsigned 64-bit integers (0 to 18446744073709551615)
+`f32`   | `float32`, `float`         | IEEE-754 32-bit floating-point numbers
+`f64`  | `float64`, `double`         | IEEE-754 64-bit floating-point numbers
 
 ## <a name="String-type"> String type
 A string type represents the set of string values. A string value is a (possibly empty) sequence of bytes. The predeclared string type is string. The length of a string `s` can be discovered using the built­in instance getter `s.length`. The length is a compile­time constant if the string is a constant. A string's elements can be accessed by integer indices 0 through s.length - 1. It is illegal to take the address of such an element; if s[i] is the i'th byte of a string, &s[i] is invalid.
@@ -181,7 +198,7 @@ The length is part of the array's type; it must evaluate to a non­negative cons
 
 ## <a name="Struct-type"> Struct type
 
-A struct is a sequence of named elements, called fields, each of which has a name and a type. Field names may be specified explicitly (IdentifierList) or implicitly (AnonymousField). Within a struct, non­ blank field names must be unique.
+A struct is a sequence of named elements, called fields, each of which has a name and a type. Field names must be specified explicitly (IdentifierList). Within a struct, field names must be unique.
 
 ```typescript
 struct GenericRobot {
@@ -198,6 +215,8 @@ struct Dog {
 ```
 
 ## <a name="Class-type"> Class type
+
+A class is similar to struct, inside class methods can be defined along with fields.
 
 ## <a name="Pointer-type"> Pointer type
 A pointer type denotes the set of all pointers to variables of a given type, called the base type of the pointer. The value of an uninitialized pointer is `null`.
@@ -343,29 +362,87 @@ console.log(rgba)   // {r:[0.0, 0.0, 0.0, 0.0], g:[0.0, 0.0, 0.0, 0.0], b:[0.0, 
 
 # <a name="Blocks"> Blocks
 
+A block is a possibly empty sequence of declarations and statements within matching brace brackets.
+```
+Block = "{" StatementList "}" .
+StatementList = { Statement ";" } .
+```
+In addition to explicit blocks in the source code, there are implicit blocks:
+
+1. Each "if", "for", and "switch" statement is considered to be in its own implicit block. 
+2. Each clause in a "switch" or "select" statement acts as an implicit block.
+
 # <a name="Declarations-and-scope"> Declarations and scope
+
+A declaration binds identifier to a constant, type, variable, function, label, or package. Every identifier in a program must be declared. No identifier may be declared twice in the same block.
 
 # <a name="Label-scopes"> Label scopes
 
+Labels are declared by labeled statements and are used in the "break", "continue", and "goto" statements. It is illegal to define a label that is never used. In contrast to other identifiers, labels are not block scoped and do not conflict with identifiers that are not labels. The scope of a label is the body of the function in which it is declared and excludes the body of any nested function.
+
 # <a name="Predeclared-identifiers"> Predeclared identifiers
 
-# <a name="Exported-identifiers"> Exported identifiers
+The following identifiers are implicitly declared in the global block:
+
+```
+Types:
+        boolean byte simd128 error float32 float64
+        int int8 int16 int32 int64 string
+        uint uint8 uint16 uint32 uint64 uintptr
+Constants:
+        true false
+Zero value:
+        null
+Functions:
+        alignof instanceof new sizeof typeof  
+```
 
 # <a name="Uniqueness-of-identifiers"> Uniqueness of identifiers
 
+Given a set of identifiers, an identifier is called unique if it is different from every other in the set. Two identifiers are different if they are spelled differently, or if they appear in different modules. Otherwise, they are the same.
+
 # <a name="Constant-declarations"> Constant declarations
+
+A constant declaration binds identifiers (the names of the constants) to the values of constant expressions.
+
+```
+const tinyDouble = 1.0
+const tinyInt = 1
+const longFloat:float32 = 64912.8273, logInt:int64 = 8915238172653
+```
 
 # <a name="Type-declarations"> Type declarations
 
+A type declaration binds an identifier, the type name, to a new type that has the same underlying type as an existing type, and operations defined for the existing type are also defined for the new type. The new type is different from the existing type.
+
 # <a name="Variable-declarations"> Variable declarations
+
+A variable declaration creates one or more variables, binds corresponding identifiers to them, and gives each a type and an initial value.
 
 # <a name="Function-declarations"> Function declarations
 
+A function declaration binds an identifier, the function name, to a function.
+```
+FunctionDecl = "function" FunctionName ( Function | Signature )
+FunctionName = identifier
+Function     = Signature FunctionBody
+FunctionBody = Block
+```
+
 # <a name="Method-declarations"> Method declarations
 
+A method is a function with a receiver. A method declaration binds an identifier, the method name, to a method, and associates the method with the receiver's base type.
+```
+MethodDecl   = "function" Receiver MethodName ( Function | Signature )
+Receiver     = Parameters
+```
 # <a name="Class-declarations"> Class declarations
 
+A class is combinations of struct and methods.
+
 # <a name="Expressions"> Expressions
+
+An expression specifies the computation of a value by applying operators and functions to operands.
 
 # <a name="Operands"> Operands
 
@@ -530,10 +607,6 @@ let _float64 = 1.0 //default floating point number type is float64
 let _float32 = 1.0f //number.fraction+f represent 32bit floating point numbers
 ```
 
-# <a name="8"/>8 Receving functions
-```typescript
-function [this:Dog] bark() {/*implementation*/}
-```
 # <a name="9"/>9 Class
 
 ##### Example 1
@@ -643,11 +716,9 @@ function main() {
 # <a name="13"/>13 Worker
 
 ```typescript
-worker {
-    export function filterKernel(in:float64[], out:float64[], start:int32, end:int32) {
-        for(let i:int32 = start; i < end; i++){
-            out[i] = in[i];
-        }
+function filterKernel(in:float64[], out:float64[], start:int32, end:int32) {
+    for(let i:int32 = start; i < end; i++){
+        out[i] = in[i];
     }
 }
 
@@ -655,10 +726,15 @@ async function applyFilter(in:RGBA[]): RGBA[] {
     let length = in.length;
     let numCpu = process.NUM_CPU;
     let blockSize = length / process.NUM_CPU;
-    let out = new RGBA[](length);
+    let ch = new RGBA[](length);
+    channel color:RGBA4 = new channel<i32>(numCpu)
     for(let i = 0; i < numCpu; i++) {
         let start = i * blockSize;
         worker filterKernel(in, out, start, start + blockSize);
+    }
+    for (i = 0; i < numCpu; i++) {
+        <-ch
+        console.log('Show some progress...')
     }
     return out;
 }
@@ -677,6 +753,4 @@ async function main() {
     let colors = new RGBA[](1024 * 1024);
     let result = await applyFilter(colors);
 }
-
-
 ```
