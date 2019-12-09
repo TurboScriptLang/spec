@@ -53,7 +53,7 @@ There are some difference between concept of JavaScript and TurboScript. 1) vari
 
 # <a name="Basic-concepts"> Basic concepts
 
-TurboScript stands for hassel free parallel programming in web using JavaScript dialect with additional type information on top of JavaScript syntax and parallel programming features like shared memory, context sharing workers, SIMD, channels etc... TurboScript may look like TypeScript but it is not TypeScript.
+TurboScript stands for hassle free parallel programming in web using JavaScript dialect with additional type information on top of JavaScript syntax and parallel programming features like shared memory, context sharing workers, SIMD, channels etc... TurboScript may look like TypeScript but it is not TypeScript.
 
 # <a name="Lexical-elements"> Lexical elements
 
